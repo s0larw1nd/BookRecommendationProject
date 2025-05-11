@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>{{user.username}}</h1>
+<h1>{{user.first_name}}</h1>
+<h1>{{user.last_name}}</h1>
+<h1>{{user.date_joined|timesince}}</h1>
+
+{% if age is not None %}
+<h1>{{age}}</h1>
+{% endif %}
+
+{% if location %}
+<h1>{{location}}</h1>
+{% endif %}
+
+{% for rating in ratings %}
+<h1><a href="{% url 'book' rating.isbn.id %}" style="color: inherit; text-decoration: none;">{{rating.isbn}}</a> ({{rating.isbn.publication_year}}): {{rating.rating}}</h1>
+{% endfor %}
+
+{% endblock content %}

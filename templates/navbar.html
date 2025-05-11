@@ -1,0 +1,23 @@
+<div style="display: flex;">
+    <div>
+        <a href="/" style="color: inherit; text-decoration: none;">
+            <h1>Home</h1>
+        </a>
+        
+        <form method="GET" action="{% url 'home' %}">
+            <input type="text" name="q" placeholder="Search Books..." />
+        </form>
+    </div>
+
+    <div style="margin-left: auto;">
+        {% if request.user.is_authenticated %}
+        <p>Hello <a href="{% url 'user' request.user.id %}">{{request.user}}</a></p>
+        <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</div>
+
+
+<hr>

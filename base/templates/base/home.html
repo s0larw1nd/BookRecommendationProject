@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>Books</h1>
+{% for book in books %}
+    <h1><a href="{% url 'book' book.id %}" style="color: inherit; text-decoration: none;">{{book.title}} {{book.publication_year}}</a></h1>
+{% endfor %}
+
+{% endblock content %}

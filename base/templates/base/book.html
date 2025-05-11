@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>{{book.title}}</h1>
+<h1><a href="{% url 'author' book.author %}" style="color: inherit; text-decoration: none;">{{book.author}}</a></h1>
+<h1><a href="{% url 'publisher' book.publisher %}" style="color: inherit; text-decoration: none;">{{book.publisher}}</a></h1>
+{% if request.user.is_authenticated %}
+    {% if not rated %}
+    <div class="rating-form">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="number" name="rating" min="1" max="10" required>
+            <input type="text" name="comment" placeholder="Write your comment here" />
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    {% else %}
+    <div class="rating-form">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="number" name="rating" min="1" max="10" value="{{cur_rating.rating}}" required>
+            {% if not cur_comment %}
+                <input type="text" name="comment" placeholder="Write your comment here" />
+            {% else %}
+                <input type="text" name="comment" value="{{cur_comment.comment}}" />
+            {% endif %}
+            <input type="submit" value="Submit">
+        </form>
+        <a href="{% url 'delete-rating' cur_rating.id %}">Delete</a>
+    </div>
+    {% endif %}
+{% endif %}
+<h1>{{average}} from {{k_ratings}} ratings: </h1>
+{% for rating in ratings %}
+    {% if rating.user != request.user %}
+        <h3><a href="{% url 'user' rating.user.id %}" style="color: inherit; text-decoration: none;">{{rating.user}}</a> - {{rating.rating}}</h3>
+    {% endif %}
+{% endfor %}
+{% endblock content %}

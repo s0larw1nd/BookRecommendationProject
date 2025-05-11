@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>{{publisher}}</h1>
+
+{% for item in book_data %}
+<li>
+  <strong><a href="{% url 'book' item.book.id %}" style="color: inherit; text-decoration: none;">{{ item.book.title }}</a></strong><br>
+  Автор: <a href="{% url 'author' item.book.author %}" style="color: inherit; text-decoration: none;">{{ item.book.author }}</a>
+  Средний рейтинг: {{ item.avg_rating }}
+</li>
+{% endfor %}
+
+{% endblock content %}
